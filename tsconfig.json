@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/esm",
+    "declarationDir": "./dist/types",
+    "declaration": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "module": "ESNext",
+    "target": "ES5",
+    "jsx": "react",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["src/**/*"],
+  "exclude": [
+    "node_modules",
+    "jest.config.js",
+    "webpack.config.js",
+    "src/tests",
+    "src/units/tests"
+  ]
+}
