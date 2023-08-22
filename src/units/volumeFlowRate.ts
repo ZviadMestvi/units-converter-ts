@@ -2,8 +2,8 @@ import { IMeasure } from '../types';
 
 const RATIO = 33.8140227;
 
-type volumeFlowRateSystems = 'metric' | 'imperial';
-type volumeFlowRateUnits =
+export type volumeFlowRateSystems = 'metric' | 'imperial';
+export type volumeFlowRateUnits =
   | 'mm3/s'
   | 'cm3/s'
   | 'ml/s'
@@ -42,10 +42,7 @@ type volumeFlowRateUnits =
   | 'yd3/min'
   | 'yd3/h';
 
-export const volumeFlowRate: IMeasure<
-  volumeFlowRateSystems,
-  volumeFlowRateUnits
-> = {
+export const volumeFlowRate: IMeasure<volumeFlowRateSystems, volumeFlowRateUnits> = {
   metric: {
     baseUnit: 'l/s',
     transform: (val: number): number => val * RATIO,

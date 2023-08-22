@@ -1,9 +1,9 @@
 import { convert } from '..';
-import { allMeasures } from '../types';
+import { allMeasureNames } from '../units/all';
 
 test('should return array of available measures', () => {
   const actual = convert.measures();
-  const expected = allMeasures;
+  const expected = allMeasureNames;
 
   expect(actual).toEqual(expected);
 });

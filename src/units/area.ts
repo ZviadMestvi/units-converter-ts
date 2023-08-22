@@ -1,17 +1,7 @@
 import { IMeasure } from '../types';
 
-type areaSystems = 'metric' | 'imperial';
-type areaUnits =
-  | 'mm2'
-  | 'cm2'
-  | 'm2'
-  | 'ha'
-  | 'km2'
-  | 'in2'
-  | 'ft2'
-  | 'yd2'
-  | 'ac'
-  | 'mi2';
+export type areaSystems = 'metric' | 'imperial';
+export type areaUnits = 'mm2' | 'cm2' | 'm2' | 'are' | 'ha' | 'km2' | 'circ-mil' | 'circ-inch' | 'in2' | 'ft2' | 'yd2' | 'ro' | 'ac' | 'mi2' | 'twp';
 
 const RATIO = 10.7639;
 
@@ -41,6 +31,13 @@ export const area: IMeasure<areaSystems, areaUnits> = {
         },
         anchor: 1,
       },
+      are: {
+        name: {
+          singular: 'are',
+          plural: 'ares',
+        },
+        anchor: 100,
+      },
       ha: {
         name: {
           singular: 'hectare',
@@ -61,6 +58,20 @@ export const area: IMeasure<areaSystems, areaUnits> = {
     baseUnit: 'ft2',
     transform: (val: number): number => (val * 1) / RATIO,
     units: {
+      'circ-mil': {
+        name: {
+          singular: 'circular mil',
+          plural: 'circular mils',
+        },
+        anchor: 0.000000005454153912,
+      },
+      'circ-inch': {
+        name: {
+          singular: 'circular inch',
+          plural: 'circular inches',
+        },
+        anchor: 0.0054541539,
+      },
       in2: {
         name: {
           singular: 'square inch',
@@ -82,6 +93,13 @@ export const area: IMeasure<areaSystems, areaUnits> = {
         },
         anchor: 9,
       },
+      ro: {
+        name: {
+          singular: 'rood',
+          plural: 'roods',
+        },
+        anchor: 10890,
+      },
       ac: {
         name: {
           singular: 'acre',
@@ -95,6 +113,13 @@ export const area: IMeasure<areaSystems, areaUnits> = {
           plural: 'square miles',
         },
         anchor: 27878400,
+      },
+      twp: {
+        name: {
+          singular: 'township',
+          plural: 'townships',
+        },
+        anchor: 1003622400,
       },
     },
   },

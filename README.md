@@ -1,6 +1,10 @@
 # units-converter-ts
 
-A simple utility library for converting units.
+![NPM Downloads](https://img.shields.io/npm/dw/units-converter-ts)
+![NPM License](https://img.shields.io/npm/l/units-converter-ts)
+
+A simple utility library for converting units. Inspired by [convert-units](https://github.com/convert-units/convert-units) and [units-converter](https://github.com/nosferatoy/units-converter).
+I didn't liked the syntax used in these libraries so I decided to make my own one.
 
 ## Installation
 
@@ -53,6 +57,25 @@ converter.mass.convert('kg', 'g', 1);
 // 1000
 ```
 
+There is another alternative, if you don't want to use specific measure, you can import convert object and convert any unit. For example:
+
+```js
+import { convert } from 'units-converter-ts';
+```
+
+or for Node.js:
+
+```js
+const converter = require('units-converter-ts');
+```
+
+and use it like so:
+
+```js
+converter.convert.convert('mm', 'm', 1000);
+// 1
+```
+
 ## Examples
 
 The library has other methods as well, here are use cases for all of them.
@@ -67,21 +90,142 @@ convert.measures();
 Get list of all available units:
 
 ```js
-convert.allPossibilities();
+convert.possibilities();
 // [ 'mm2', 'deg', 'mC', 'ml', 'l', 'fl-oz', ... ]
 ```
 
-Get list of units from specific measure:
+Get list of units for specific measure:
 
 ```js
 power.possibilities();
 // [ 'mW', 'W', 'kW', 'MW', 'GW' ]
+
+// OR
+
+convert.possibilities('power');
+// [ 'mW', 'W', 'kW', 'MW', 'GW' ]
+```
+
+Get list of units for specific measures:
+
+```js
+convert.possibilities('power', 'pace');
+// [ "mW", "W", "kW", "MW", "GW", "min/km", "s/m", "min/mi", "s/ft"]
+```
+
+Get list of all unit descriptions
+
+```js
+convert.list();
+/*
+  [{
+      "abbreviation": "gal",
+      "measure": "acceleration",
+      "plural": "gals"
+      "singular": "gal",
+      "system": "metric",
+    },
+    {
+      "abbreviation": "m/s2",
+      "measure": "acceleration",
+      "plural": "metres per second squared"
+      "singular": "metre per second squared",
+      "system": "metric",
+    }
+    ...
+  ]
+*/
+```
+
+Get list of unit descriptions for specific measure:
+
+```js
+illuminance.list();
+/*
+  [{
+      "abbreviation": "lx",
+      "measure": "illuminance",
+      "plural": "lux"
+      "singular": "lux",
+      "system": "metric",
+    },
+    {
+      "abbreviation": "ft-cd",
+      "measure": "illuminance",
+      "plural": "foot-candles"
+      "singular": "foot-candle",
+      "system": "imperial",
+  }]
+*/
+
+// OR
+
+convert.list('illuminance');
+/*
+  [{
+      "abbreviation": "lx",
+      "measure": "illuminance",
+      "plural": "lux"
+      "singular": "lux",
+      "system": "metric",
+    },
+    {
+      "abbreviation": "ft-cd",
+      "measure": "illuminance",
+      "plural": "foot-candles"
+      "singular": "foot-candle",
+      "system": "imperial",
+  }]
+*/
+```
+
+Get list of units for specific measures:
+
+```js
+convert.list('illuminance', 'force');
+/*
+  [{
+      "abbreviation": "lx",
+      "measure": "illuminance",
+      "plural": "lux"
+      "singular": "lux",
+      "system": "metric",
+    },
+    {
+      "abbreviation": "ft-cd",
+      "measure": "illuminance",
+      "plural": "foot-candles"
+      "singular": "foot-candle",
+      "system": "imperial",
+    }
+    {
+      abbreviation: 'N',
+      measure: 'force',
+      plural: 'newtons',
+      singular: 'newton',
+      system: 'metric',
+    },
+    {
+      abbreviation: 'kN',
+      measure: 'force',
+      plural: 'kilonewtons',
+      singular: 'kilonewton',
+      system: 'metric',
+    },
+    {
+      abbreviation: 'lbf',
+      measure: 'force',
+      plural: 'pound-forces',
+      singular: 'pound-force',
+      system: 'imperial',
+  }]
+*/
 ```
 
 Get information about specific unit:
 
 ```js
-force.describe('kN');
+convert.describe('kN');
 /*
   {
     abbreviation: "kN",
@@ -98,6 +242,7 @@ force.describe('kN');
 <details><summary>Acceleration</summary>
 <p>
 
+- gal
 - g-force
 - m/s2
 
@@ -107,6 +252,7 @@ force.describe('kN');
 <details><summary>Angle</summary>
 <p>
 
+- rev
 - rad
 - deg
 - grad
@@ -134,13 +280,18 @@ force.describe('kN');
 - mm2
 - cm2
 - m2
+- are
 - ha
 - km2
+- circ-mil
+- circ-inch
 - in2
 - ft2
 - yd2
+- ro
 - ac
 - mi2
+- twp
 
 </p>
 </details>
@@ -148,11 +299,14 @@ force.describe('kN');
 <details><summary>Charge</summary>
 <p>
 
+- abC
 - c
 - mC
 - μC
 - nC
+- stC
 - pC
+- e
 
 </p>
 </details>
@@ -160,8 +314,10 @@ force.describe('kN');
 <details><summary>Current</summary>
 <p>
 
+- stA
 - mA
 - A
+- abA
 - kA
 
 </p>
@@ -194,6 +350,7 @@ force.describe('kN');
 - kWh
 - MWh
 - GWh
+- Btu-it
 
 </p>
 </details>

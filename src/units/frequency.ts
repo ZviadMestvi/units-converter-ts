@@ -3,17 +3,8 @@ import { IMeasure } from '../types';
 const RATIO = 1;
 const PI = 3.141592653589793;
 
-type frequencySystems = 'metric';
-type frequencyUnits =
-  | 'mHz'
-  | 'Hz'
-  | 'kHz'
-  | 'MHz'
-  | 'GHz'
-  | 'THz'
-  | 'rpm'
-  | 'deg/s'
-  | 'rad/s';
+export type frequencySystems = 'metric';
+export type frequencyUnits = 'mHz' | 'Hz' | 'kHz' | 'MHz' | 'GHz' | 'THz' | 'rpm' | 'deg/s' | 'rad/s';
 
 export const frequency: IMeasure<frequencySystems, frequencyUnits> = {
   metric: {

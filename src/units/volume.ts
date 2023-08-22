@@ -2,8 +2,8 @@ import { IMeasure } from '../types';
 
 const RATIO = 33.8140226;
 
-type volumeSystems = 'metric' | 'imperial';
-type volumeUnits =
+export type volumeSystems = 'metric' | 'imperial';
+export type volumeUnits =
   | 'mm3'
   | 'cm3'
   | 'ml'

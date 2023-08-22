@@ -2,8 +2,8 @@ import { IMeasure } from '../types';
 
 const RATIO = 2.20462262;
 
-type massSystems = 'metric' | 'imperial';
-type massUnits =
+export type massSystems = 'metric' | 'imperial';
+export type massUnits =
   | 'mg'
   | 'g'
   | 'kg'

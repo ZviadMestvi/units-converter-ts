@@ -1,5 +1,6 @@
 import { energy } from '../..';
 
+// metric
 test('J to J', () => {
   expect(energy.convert('J', 'J', 1)).toBe(1);
 });
@@ -14,4 +15,9 @@ test('GWh to kWh', () => {
 
 test('MWh to kJ', () => {
   expect(energy.convert('MWh', 'kJ', 1)).toBe(3600000);
+});
+
+// both
+test('Btu-it to J', () => {
+  expect(energy.convert('Btu-it', 'J', 1)).toBeCloseTo(1055.0558526);
 });

@@ -1,7 +1,7 @@
 import { IMeasure } from '../types';
 
-type temperatureSystems = 'metric' | 'imperial';
-type temperatureUnits = 'C' | 'K' | 'F' | 'R';
+export type temperatureSystems = 'metric' | 'imperial';
+export type temperatureUnits = 'C' | 'K' | 'F' | 'R';
 
 export const temperature: IMeasure<temperatureSystems, temperatureUnits> = {
   metric: {

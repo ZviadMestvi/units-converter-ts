@@ -2,8 +2,8 @@ import { IMeasure } from '../types';
 
 const RATIO = 10.76391;
 
-type illuminanceSystems = 'metric' | 'imperial';
-type illuminanceUnits = 'lx' | 'ft-cd';
+export type illuminanceSystems = 'metric' | 'imperial';
+export type illuminanceUnits = 'lx' | 'ft-cd';
 
 export const illuminance: IMeasure<illuminanceSystems, illuminanceUnits> = {
   metric: {

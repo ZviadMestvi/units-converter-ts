@@ -2,8 +2,8 @@ import { IMeasure } from '../types';
 
 const RATIO = 1;
 
-type voltageSystems = 'metric';
-type voltageUnits = 'mV' | 'V' | 'kV';
+export type voltageSystems = 'metric';
+export type voltageUnits = 'mV' | 'V' | 'kV';
 
 export const voltage: IMeasure<voltageSystems, voltageUnits> = {
   metric: {

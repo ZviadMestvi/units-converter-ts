@@ -2,13 +2,10 @@ import { IMeasure } from '../types';
 
 const RATIO = 1;
 
-type reactiveEnergySystems = 'metric';
-type reactiveEnergyUnits = 'mVARh' | 'VARh' | 'kVARh' | 'MVARh' | 'GVARh';
+export type reactiveEnergySystems = 'metric';
+export type reactiveEnergyUnits = 'mVARh' | 'VARh' | 'kVARh' | 'MVARh' | 'GVARh';
 
-export const reactiveEnergy: IMeasure<
-  reactiveEnergySystems,
-  reactiveEnergyUnits
-> = {
+export const reactiveEnergy: IMeasure<reactiveEnergySystems, reactiveEnergyUnits> = {
   metric: {
     baseUnit: 'VARh',
     transform: (val: number): number => val * RATIO,

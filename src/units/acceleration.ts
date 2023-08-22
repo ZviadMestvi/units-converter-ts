@@ -1,19 +1,19 @@
 import { IMeasure } from '../types';
 
-type accelerationSystems = 'metric';
-type accelerationUnits = 'g-force' | 'm/s2';
+export type accelerationSystems = 'metric';
+export type accelerationUnits = 'gal' | 'm/s2' | 'g-force';
 
 export const acceleration: IMeasure<accelerationSystems, accelerationUnits> = {
   metric: {
-    baseUnit: 'g-force',
+    baseUnit: 'm/s2',
     transform: (val: number): number => val * 1,
     units: {
-      'g-force': {
+      gal: {
         name: {
-          singular: 'g-force',
-          plural: 'g-forces',
+          singular: 'gal',
+          plural: 'gals',
         },
-        anchor: 9.80665,
+        anchor: 0.01,
       },
       'm/s2': {
         name: {
@@ -21,6 +21,13 @@ export const acceleration: IMeasure<accelerationSystems, accelerationUnits> = {
           plural: 'metres per second squared',
         },
         anchor: 1,
+      },
+      'g-force': {
+        name: {
+          singular: 'g-force',
+          plural: 'g-forces',
+        },
+        anchor: 9.80665,
       },
     },
   },

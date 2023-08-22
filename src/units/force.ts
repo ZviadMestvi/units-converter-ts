@@ -2,8 +2,8 @@ import { IMeasure } from '../types';
 
 const RATIO = 4.44822;
 
-type forceSystems = 'metric' | 'imperial';
-type forceUnits = 'N' | 'kN' | 'lbf';
+export type forceSystems = 'metric' | 'imperial';
+export type forceUnits = 'N' | 'kN' | 'lbf';
 
 export const force: IMeasure<forceSystems, forceUnits> = {
   metric: {

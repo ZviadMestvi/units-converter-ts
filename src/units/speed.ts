@@ -2,8 +2,8 @@ import { IMeasure } from '../types';
 
 const RATIO = 1.609344;
 
-type speedSystems = 'metric' | 'imperial';
-type speedUnits = 'km/h' | 'm/s' | 'ft/s' | 'mi/h' | 'knot';
+export type speedSystems = 'metric' | 'imperial';
+export type speedUnits = 'km/h' | 'm/s' | 'ft/s' | 'mi/h' | 'knot';
 
 export const speed: IMeasure<speedSystems, speedUnits> = {
   metric: {

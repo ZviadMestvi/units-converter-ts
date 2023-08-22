@@ -14,11 +14,5 @@
     "allowSyntheticDefaultImports": true
   },
   "include": ["src/**/*"],
-  "exclude": [
-    "node_modules",
-    "jest.config.js",
-    "webpack.config.js",
-    "src/tests",
-    "src/units/tests"
-  ]
+  "exclude": ["node_modules", "jest.config.js", "webpack.config.js"]
 }

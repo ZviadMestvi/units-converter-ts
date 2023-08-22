@@ -3,20 +3,20 @@ import { IMeasure } from '../types';
 const RATIO = 1;
 const PI = 3.141592653589793;
 
-type angleSystems = 'metric';
-type angleUnits = 'rad' | 'deg' | 'grad' | 'arcmin' | 'arcsec';
+export type angleSystems = 'metric';
+export type angleUnits = 'rev' | 'deg' | 'rad' | 'grad' | 'arcmin' | 'arcsec';
 
 export const angle: IMeasure<angleSystems, angleUnits> = {
   metric: {
     baseUnit: 'deg',
     transform: (val: number): number => val * RATIO,
     units: {
-      rad: {
+      rev: {
         name: {
-          singular: 'radian',
-          plural: 'radians',
+          singular: 'revolution',
+          plural: 'revolutions',
         },
-        anchor: 180 / PI,
+        anchor: 360,
       },
       deg: {
         name: {
@@ -24,6 +24,13 @@ export const angle: IMeasure<angleSystems, angleUnits> = {
           plural: 'degrees',
         },
         anchor: 1,
+      },
+      rad: {
+        name: {
+          singular: 'radian',
+          plural: 'radians',
+        },
+        anchor: 180 / PI,
       },
       grad: {
         name: {

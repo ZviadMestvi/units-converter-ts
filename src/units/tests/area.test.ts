@@ -22,8 +22,8 @@ test('ft2 to in2', () => {
   expect(area.convert('ft2', 'in2', 1)).toBe(144);
 });
 
-test('in2 to ft2', () => {
-  expect(area.convert('in2', 'ft2', 1)).toBe(1 / 144);
+test('twp to ft2', () => {
+  expect(area.convert('twp', 'ft2', 1)).toBe(1003622400);
 });
 
 // both

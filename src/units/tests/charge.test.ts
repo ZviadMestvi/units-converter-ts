@@ -9,9 +9,13 @@ test('c to mC', () => {
 });
 
 test('nC to μC', () => {
-  expect(charge.convert('nC', 'μC', 1)).toBe(0.001);
+  expect(charge.convert('nC', 'uC', 1)).toBe(0.001);
 });
 
 test('pC to μC', () => {
-  expect(charge.convert('pC', 'μC', 1)).toBe(0.000001);
+  expect(charge.convert('pC', 'uC', 1)).toBe(0.000001);
+});
+
+test('abC to stC', () => {
+  expect(charge.convert('abC', 'stC', 1)).toBeCloseTo(29979245799.996);
 });

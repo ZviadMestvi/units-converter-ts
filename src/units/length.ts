@@ -2,21 +2,8 @@ import { IMeasure } from '../types';
 
 const RATIO = 3.28084;
 
-type lengthSystems = 'metric' | 'imperial';
-type lengthUnits =
-  | 'mm'
-  | 'cm'
-  | 'm'
-  | 'km'
-  | 'in'
-  | 'hand'
-  | 'ft'
-  | 'ft-us'
-  | 'yd'
-  | 'fur'
-  | 'fath'
-  | 'mi'
-  | 'nMi';
+export type lengthSystems = 'metric' | 'imperial';
+export type lengthUnits = 'mm' | 'cm' | 'm' | 'km' | 'in' | 'hand' | 'ft' | 'ft-us' | 'yd' | 'fur' | 'fath' | 'mi' | 'nMi';
 
 export const length: IMeasure<lengthSystems, lengthUnits> = {
   metric: {

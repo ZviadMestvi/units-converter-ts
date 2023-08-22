@@ -1,18 +1,149 @@
-import {
-  IMeasure,
-  IUnit,
-  IUnitDescription,
-  allMeasures,
-  allUnits,
-} from './types';
+import { AllMeasures, AllMeasuresUnits, IMeasure, IUnit, IUnitDescription } from './types';
+import { allUnits, allMeasureNames, allMeasureObjs } from './units/all';
 
 export class Convert<TSystems extends string, TUnitNames extends string> {
-  public static measures(): string[] {
-    return allMeasures;
+  /**
+   * Throws error with custom error message.
+   *
+   * @param {string} unitName - The name of the unsupported unit that caused the error. Value is empty string by default.
+   * @param {string} msg - The custom message. Value is empty string by default.
+   */
+  private static throwUnsupportedUnitError(unitName: string = '', msg: string = ''): never {
+    throw new Error(`${msg} Unit '${unitName}' is not a valid or supported unit for this measure. Get list of units using {measure}.possibilities()`);
+  }
+
+  /**
+   * Returns a measure object and its name for a given unit.
+   *
+   * @param {string} unitName - The name of the unit for which to retrieve the measure object.
+   */
+  private static getMeasure(unitName: string): { obj: IMeasure<string, AllMeasuresUnits>; name: string } {
+    for (const measureName of allMeasureNames) {
+      if (allUnits[measureName].includes(unitName)) {
+        const measureObj = allMeasureObjs[measureName as keyof Record<AllMeasures, IMeasure<string, AllMeasuresUnits>>];
+        return { obj: measureObj, name: measureName };
+      }
+    }
+
+    throw new Error(`Cannot get measure. Unit '${unitName}' could not be found. Get list of units using convert.possibilities()`);
+  }
+
+  /**
+   * Returns an object containing the system and unit details corresponding to the provided unit name.
+   *
+   * @param {string} unitName - The unit name for which to retrieve information.
+   * @param {string} measureName - Name of the measure to retrieve unit from.
+   */
+  private static getUnit(unitName: string, measureName: string): { system: string; unit: IUnit } {
+    const measureObj: IMeasure<string, AllMeasuresUnits> = allMeasureObjs[measureName as AllMeasures];
+
+    for (const system in measureObj) {
+      const units = measureObj[system].units;
+
+      if (units[unitName as AllMeasuresUnits]) {
+        return {
+          system,
+          unit: units[unitName as AllMeasuresUnits] as IUnit,
+        };
+      }
+    }
+
+    this.throwUnsupportedUnitError(unitName, `Trying to retrieve unit from '${measureName}' measure.`);
+  }
+
+  /**
+   * Returns a description of a unit.
+   *
+   * @param {string} unitName - The name of the unit to describe.
+   * @param {string} measureName - The name of the measure to which the unit belongs.
+   */
+  private static describeUnit(unitName: string, measureName: string): IUnitDescription {
+    const unitInfo = Convert.getUnit(unitName, measureName);
+    const unitDesc: IUnitDescription = {
+      abbreviation: unitName,
+      measure: measureName,
+      system: unitInfo.system,
+      singular: unitInfo.unit.name.singular,
+      plural: unitInfo.unit.name.plural,
+    };
+
+    return unitDesc;
   }
 
   public static allPossibilities(): string[] {
-    return allUnits;
+    console.warn('This method is deprecated, please use the new method: possibilities.');
+    return this.possibilities();
+  }
+
+  public static measures(): string[] {
+    return allMeasureNames;
+  }
+
+  public static possibilities(...measures: string[]): string[] {
+    if (measures.length === 0) {
+      let possibleUnits: string[] = [];
+      for (const measureUnits in allUnits) {
+        possibleUnits.push(...allUnits[measureUnits]);
+      }
+
+      return possibleUnits;
+    }
+
+    let possibleUnits: string[] = [];
+    measures.forEach(measure => {
+      if (allMeasureNames.includes(measure)) {
+        possibleUnits.push(...allUnits[measure]);
+      } else {
+        throw new Error(`Measure '${measure}' doesn't exist. Get list of measures using convert.measures()`);
+      }
+    });
+
+    return possibleUnits;
+  }
+
+  public static describe(unitName: string): IUnitDescription {
+    const measure = this.getMeasure(unitName);
+    return this.describeUnit(unitName, measure.name);
+  }
+
+  public static list(...measures: string[]): IUnitDescription[] {
+    if (measures.length === 0) {
+      const describedUnits: IUnitDescription[] = [];
+      for (const measure in allUnits) {
+        allUnits[measure].forEach(unit => {
+          describedUnits.push(this.describeUnit(unit, measure));
+        });
+      }
+
+      return describedUnits;
+    }
+
+    const describedUnits: IUnitDescription[] = [];
+    measures.forEach(measure => {
+      if (allMeasureNames.includes(measure)) {
+        allUnits[measure].forEach(unit => {
+          describedUnits.push(this.describeUnit(unit, measure));
+        });
+      } else {
+        throw new Error(`Measure '${measure}' doesn't exist. Get list of measures using convert.measures()`);
+      }
+    });
+
+    return describedUnits;
+  }
+
+  public static convert(from: string, to: string, value: number): number {
+    if (from === to) return value;
+
+    const fromMeasure = this.getMeasure(from);
+    const toMeasure = this.getMeasure(to);
+
+    if (fromMeasure.name !== toMeasure.name) {
+      throw new Error(`Cannot convert between incompatible measures '${fromMeasure.name}' and '${toMeasure.name}'`);
+    }
+
+    const measureInstance = new Convert(fromMeasure.obj, fromMeasure.name);
+    return measureInstance.convert(from, to, value);
   }
 
   private measure: IMeasure<TSystems, TUnitNames>;
@@ -24,40 +155,27 @@ export class Convert<TSystems extends string, TUnitNames extends string> {
   }
 
   /**
-   * @returns {string[]} An array containing names of all available units for a specified measure.
+   * Returns an array containing names of all available units for a specified measure.
    */
   public possibilities(): string[] {
-    const res: string[] = [];
-
-    for (const system in this.measure) {
-      res.push(...Object.keys(this.measure[system].units));
-    }
-
-    return res;
+    return allUnits[this.measureName];
   }
 
   /**
-   * Gets information about specific unit.
+   * Returns a description for the specified unit. Deprecated: Use the convert.describe method instead.
    *
    * @param {string} unitName - The name of the unit to describe (e.g., 'cm' for centimeter).
-   * @returns {IUnitDescription} An object with information about unit.
+   * @deprecated This method is deprecated and will be removed in future versions. Please use the new convert.describe method
    */
   public describe(unitName: string): IUnitDescription {
-    const unit = this.getUnit(unitName);
+    return Convert.describeUnit(unitName, this.measureName);
+  }
 
-    if (!unit) {
-      this.throwUnsupportedUnitError(unitName, 'The unit cannot be described.');
-    }
-
-    const result: IUnitDescription = {
-      abbreviation: unitName,
-      measure: this.measureName,
-      system: unit.system,
-      singular: unit.unit.name.singular,
-      plural: unit.unit.name.plural,
-    };
-
-    return result;
+  /**
+   * Returns an array of descriptions for all units for a specified measure.
+   */
+  public list(): IUnitDescription[] {
+    return Convert.list(this.measureName);
   }
 
   /**
@@ -66,33 +184,26 @@ export class Convert<TSystems extends string, TUnitNames extends string> {
    * @param {string} from - The unit name to convert from (e.g., 'cm' for centimeter).
    * @param {string} to - The unit name to convert to (e.g., 'in' for inch).
    * @param {number} value - The numeric value to convert.
-   * @returns {number} The converted numeric value in the target unit.
+   * @returns {number} The converted numeric value.
    */
   public convert(from: string, to: string, value: number): number {
-    // If both units are the same just return the inputted value
+    // If both units are the same return the inputted value
     if (from === to) return value;
 
     let result: number = 0;
 
-    const fromUnit = this.getUnit(from);
-    const toUnit = this.getUnit(to);
+    const fromUnit = Convert.getUnit(from, this.measureName);
+    const toUnit = Convert.getUnit(to, this.measureName);
 
-    if (!fromUnit) this.throwUnsupportedUnitError(from);
-    if (!toUnit) this.throwUnsupportedUnitError(to);
-
-    const fromUnitAnchor: number = fromUnit.unit.anchor;
-    const toUnitAnchor: number = toUnit.unit.anchor;
+    const fromUnitAnchor = fromUnit.unit.anchor;
+    const toUnitAnchor = toUnit.unit.anchor;
 
     if (!fromUnitAnchor) {
-      throw new Error(
-        `'${from}' unit's anchor value is invalid. check '${this.measureName}' object`
-      );
+      throw new Error(`'${from}' unit's anchor value is invalid. check '${this.measureName}' object`);
     }
 
     if (!toUnitAnchor) {
-      throw new Error(
-        `'${to}' unit's anchor value is invalid. check '${this.measureName}' object.`
-      );
+      throw new Error(`'${to}' unit's anchor value is invalid. check '${this.measureName}' object.`);
     }
 
     result = value * fromUnitAnchor;
@@ -110,39 +221,5 @@ export class Convert<TSystems extends string, TUnitNames extends string> {
     }
 
     return result / toUnitAnchor;
-  }
-
-  /**
-   * returns the unit information (system and details) corresponding to the provided unit name.
-   *
-   * @param {string} unitName - The unit name for which to retrieve information.
-   * @returns {{system: string; unit: IUnit}} An object containing the system and unit details.
-   */
-  private getUnit(unitName: string): { system: string; unit: IUnit } {
-    for (const system in this.measure) {
-      const units = this.measure[system].units;
-
-      if (units[unitName as TUnitNames]) {
-        return {
-          system,
-          unit: units[unitName as TUnitNames],
-        };
-      }
-    }
-  }
-
-  /**
-   * Throws error with custom error message.
-   *
-   * @param {string} unit - The unsupported unit that caused the error. Value is empty string by default.
-   * @param {string} msg - The custom message.
-   */
-  private throwUnsupportedUnitError(
-    unit: string = '',
-    msg: string = ''
-  ): never {
-    throw new Error(
-      `${msg} Unit '${unit}' is not a valid or supported unit for this measure. Get list of units using {measure}.possibilities()`
-    );
   }
 }

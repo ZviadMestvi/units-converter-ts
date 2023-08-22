@@ -2,8 +2,8 @@ import { IMeasure } from '../types';
 
 const RATIO = 1;
 
-type powerSystems = 'metric';
-type powerUnits = 'mW' | 'W' | 'kW' | 'MW' | 'GW';
+export type powerSystems = 'metric';
+export type powerUnits = 'mW' | 'W' | 'kW' | 'MW' | 'GW';
 
 export const power: IMeasure<powerSystems, powerUnits> = {
   metric: {

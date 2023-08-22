@@ -8,10 +8,10 @@ test('deg to arcmin', () => {
   expect(angle.convert('deg', 'arcmin', 1)).toBe(60);
 });
 
-test('arcmin to deg', () => {
-  expect(angle.convert('arcmin', 'grad', 10)).toBeCloseTo(0.19);
+test('arcsec to deg', () => {
+  expect(angle.convert('arcsec', 'grad', 10)).toBeCloseTo(0.00277778);
 });
 
-test('rad to arcsec', () => {
-  expect(angle.convert('rad', 'arcsec', 1)).toBeCloseTo(206264.80625);
+test('rad to rev', () => {
+  expect(angle.convert('rad', 'rev', 1)).toBeCloseTo(0.159155);
 });

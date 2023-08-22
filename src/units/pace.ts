@@ -2,8 +2,8 @@ import { IMeasure } from '../types';
 
 const RATIO = 0.3048;
 
-type paceSystems = 'metric' | 'imperial';
-type paceUnits = 'min/km' | 's/m' | 'min/mi' | 's/ft';
+export type paceSystems = 'metric' | 'imperial';
+export type paceUnits = 'min/km' | 's/m' | 'min/mi' | 's/ft';
 
 export const pace: IMeasure<paceSystems, paceUnits> = {
   metric: {

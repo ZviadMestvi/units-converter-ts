@@ -2,18 +2,8 @@ import { IMeasure } from '../types';
 
 const RATIO = 8;
 
-type digitalSystems = 'bits' | 'bytes';
-type digitalUnits =
-  | 'b'
-  | 'Kb'
-  | 'Mb'
-  | 'Gb'
-  | 'Tb'
-  | 'B'
-  | 'KB'
-  | 'MB'
-  | 'GB'
-  | 'TB';
+export type digitalSystems = 'bits' | 'bytes';
+export type digitalUnits = 'b' | 'Kb' | 'Mb' | 'Gb' | 'Tb' | 'B' | 'KB' | 'MB' | 'GB' | 'TB';
 
 export const digital: IMeasure<digitalSystems, digitalUnits> = {
   bits: {

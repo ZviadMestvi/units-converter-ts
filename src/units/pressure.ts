@@ -2,16 +2,8 @@ import { IMeasure } from '../types';
 
 const RATIO = 0.00014503768078;
 
-type pressureSystems = 'metric' | 'imperial';
-type pressureUnits =
-  | 'Pa'
-  | 'hPa'
-  | 'kPa'
-  | 'bar'
-  | 'MPa'
-  | 'torr'
-  | 'psi'
-  | 'ksi';
+export type pressureSystems = 'metric' | 'imperial';
+export type pressureUnits = 'Pa' | 'hPa' | 'kPa' | 'bar' | 'MPa' | 'torr' | 'psi' | 'ksi';
 
 export const pressure: IMeasure<pressureSystems, pressureUnits> = {
   metric: {
@@ -42,7 +34,7 @@ export const pressure: IMeasure<pressureSystems, pressureUnits> = {
       bar: {
         name: {
           singular: 'bar',
-          plural: 'bar',
+          plural: 'bars',
         },
         anchor: 100,
       },

@@ -3,19 +3,8 @@ import { IMeasure } from '../types';
 const RATIO = 1;
 const daysInYear = 365.25;
 
-type timeSystems = 'metric';
-type timeUnits =
-  | 'ns'
-  | 'mu'
-  | 'ms'
-  | 's'
-  | 'min'
-  | 'h'
-  | 'd'
-  | 'week'
-  | 'fortnight'
-  | 'month'
-  | 'year';
+export type timeSystems = 'metric';
+export type timeUnits = 'ns' | 'mu' | 'ms' | 's' | 'min' | 'h' | 'd' | 'week' | 'fortnight' | 'month' | 'year';
 
 export const time: IMeasure<timeSystems, timeUnits> = {
   metric: {
@@ -81,7 +70,7 @@ export const time: IMeasure<timeSystems, timeUnits> = {
       fortnight: {
         name: {
           singular: 'fortnight',
-          plural: 'fortnight',
+          plural: 'fortnights',
         },
         anchor: 60 * 60 * 24 * 14,
       },

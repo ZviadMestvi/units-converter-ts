@@ -1,14 +1,14 @@
 import { IMeasure } from '../types';
 
-const RATIO = 1;
+const RATIO = 1055.0558526;
 
-type energySystems = 'metric';
-type energyUnits = 'J' | 'kJ' | 'mWh' | 'Wh' | 'kWh' | 'MWh' | 'GWh';
+export type energySystems = 'metric' | 'imperial';
+export type energyUnits = 'J' | 'kJ' | 'mWh' | 'Wh' | 'kWh' | 'MWh' | 'GWh' | 'Btu-it';
 
 export const energy: IMeasure<energySystems, energyUnits> = {
   metric: {
     baseUnit: 'J',
-    transform: (val: number): number => RATIO * val,
+    transform: (val: number): number => (val * 1) / RATIO,
     units: {
       J: {
         name: {
@@ -58,6 +58,19 @@ export const energy: IMeasure<energySystems, energyUnits> = {
           plural: 'gigawatt-hours',
         },
         anchor: 3600000000000,
+      },
+    },
+  },
+  imperial: {
+    baseUnit: 'Btu-it',
+    transform: (val: number): number => RATIO * val,
+    units: {
+      'Btu-it': {
+        name: {
+          singular: 'british thermal unit (international table)',
+          plural: 'british thermal units (international table)',
+        },
+        anchor: 1,
       },
     },
   },
