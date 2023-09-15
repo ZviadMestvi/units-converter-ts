@@ -63,13 +63,6 @@ export const convert = {
   possibilities: (...measures: string[]): string[] => Convert.possibilities(...measures),
 
   /**
-   * Returns an array of all available units. Deprecated: Use the convert.possibilities method instead.
-   *
-   * @deprecated This method is deprecated and will be removed in future versions. Please use the convert.possibilities method to retrieve all available units.
-   */
-  allPossibilities: (): string[] => Convert.allPossibilities(),
-
-  /**
    * Converts a numeric value from one unit to another within the same measure system.
    *
    * @param {string} from - The unit name to convert from (e.g., 'cm' for centimeter).

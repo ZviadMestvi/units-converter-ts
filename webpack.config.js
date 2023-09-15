@@ -15,9 +15,6 @@ const commonConfig = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
-  externals: {
-    'units-converter-ts': 'units-converter-ts',
-  },
 };
 
 module.exports = [

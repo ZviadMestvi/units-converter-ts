@@ -70,11 +70,6 @@ export class Convert<TSystems extends string, TUnitNames extends string> {
     return unitDesc;
   }
 
-  public static allPossibilities(): string[] {
-    console.warn('This method is deprecated, please use the new method: possibilities.');
-    return this.possibilities();
-  }
-
   public static measures(): string[] {
     return allMeasureNames;
   }
@@ -159,16 +154,6 @@ export class Convert<TSystems extends string, TUnitNames extends string> {
    */
   public possibilities(): string[] {
     return allUnits[this.measureName];
-  }
-
-  /**
-   * Returns a description for the specified unit. Deprecated: Use the convert.describe method instead.
-   *
-   * @param {string} unitName - The name of the unit to describe (e.g., 'cm' for centimeter).
-   * @deprecated This method is deprecated and will be removed in future versions. Please use the new convert.describe method
-   */
-  public describe(unitName: string): IUnitDescription {
-    return Convert.describeUnit(unitName, this.measureName);
   }
 
   /**
